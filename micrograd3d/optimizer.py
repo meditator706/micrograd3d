@@ -111,7 +111,7 @@ class NewtonMethod(Optimizer):
         super().__init__(learning_rate)
         self.epsilon = epsilon
         self._func = None
-        self.min_step = min_step  # 添加最小步长
+        self.min_step = min_step  
     
     def compute_full_hessian(self, x_val, y_val):
         """Compute complete Hessian matrix using second-order backpropagation"""
@@ -129,34 +129,32 @@ class NewtonMethod(Optimizer):
         x_val = Value(params[0])
         y_val = Value(params[1])
         
-        # 计算梯度范数
+       
         grad_norm = np.linalg.norm(grads)
         if grad_norm < self.min_step:
-            return params  # 如果梯度太小，直接返回
+            return params 
         
         # Compute Hessian
         H = self.compute_full_hessian(x_val, y_val)
         
         try:
-            # 使用SVD求解，更稳定
             U, s, Vh = np.linalg.svd(H)
-            s[s < self.epsilon] = self.epsilon  # 截断小奇异值
+            s[s < self.epsilon] = self.epsilon 
             H_inv = (U * (1/s)) @ Vh
             
-            # 计算牛顿方向
+
             delta = H_inv @ np.array(grads)
             
-            # 限制步长
+
             step_size = np.linalg.norm(delta)
             if step_size > 1.0:
                 delta *= 1.0 / step_size
                 
-            # 更新参数
+
             new_params = [p - self.learning_rate * d for p, d in zip(params, delta)]
             return new_params
             
         except np.linalg.LinAlgError:
-            # 如果SVD失败，退化为梯度下降
             return [p - self.learning_rate * g for p, g in zip(params, grads)]
 
 class LBFGS(Optimizer):
