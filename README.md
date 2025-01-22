@@ -33,7 +33,7 @@ MicroGrad3D is a lightweight autograd engine with 3D visualization support, feat
 
 ## Quick Start
 ```python
-from micrograd3d import Value, square, Visualizer3D
+from micrograd3d.viz import Visualizer3D
 from micrograd3d.optimizer import Adam
 
 # Define your function,only support two variables
@@ -92,7 +92,7 @@ optimizer = LBFGS(learning_rate=0.1)
 ### Custom Objective Functions
 
 ```python
-from micrograd3d import Value, Visualizer3D
+from micrograd3d.viz import Visualizer3D
 from micrograd3d.optimizer import Adam
 
 def custom_function(x, y):
