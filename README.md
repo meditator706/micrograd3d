@@ -36,7 +36,7 @@ MicroGrad3D is a lightweight autograd engine with 3D visualization support, feat
 from micrograd3d import Value, square, Visualizer3D
 from micrograd3d.optimizer import Adam
 
-# Define your function
+# Define your function,only support two variables
 def func(x, y):
     return x**2 + y**2
 
